@@ -1,1 +1,546 @@
 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#10131d">
+<title>Connect — Your World. Your Circle.</title>
+
+<style>
+:root {
+  --bg:#0d1018;
+  --panel:#171c28;
+  --panel2:#202738;
+  --border:#2b3447;
+  --text:#f5f6fa;
+  --muted:#9ca8bd;
+  --gold:#d8b56d;
+  --green:#78d6b0;
+}
+* {box-sizing:border-box}
+body {
+  margin:0;background:var(--bg);color:var(--text);
+  font-family:Arial,Helvetica,sans-serif;
+}
+button,input,textarea,select {font:inherit}
+button {cursor:pointer}
+.topbar {
+  height:68px;position:sticky;top:0;z-index:10;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:0 5%;background:#10131df2;
+  border-bottom:1px solid var(--border);
+}
+.logo {font-size:27px;font-weight:900;letter-spacing:-1px}
+.logo span {color:var(--gold)}
+.search {
+  width:35%;padding:12px 18px;border-radius:30px;
+  border:1px solid var(--border);background:var(--panel);
+  color:white;outline:none;
+}
+.btn {
+  background:var(--gold);color:#17130b;
+  padding:11px 18px;border:0;border-radius:25px;
+  font-weight:bold;
+}
+.btn.secondary {
+  background:var(--panel2);color:white;
+  border:1px solid var(--border);
+}
+.layout {
+  max-width:1200px;margin:25px auto;padding:0 16px;
+  display:grid;grid-template-columns:210px minmax(0,650px) 250px;
+  gap:22px;
+}
+.sidebar,.rightbar,.card {
+  background:var(--panel);border:1px solid var(--border);
+  border-radius:17px;
+}
+.sidebar {padding:13px;height:max-content;position:sticky;top:85px}
+.nav {
+  display:block;width:100%;text-align:left;
+  padding:14px;border:0;border-radius:10px;
+  background:transparent;color:#c6cede;margin-bottom:4px;
+}
+.nav:hover,.nav.active {background:var(--panel2);color:white}
+.nav b {display:inline-block;width:27px;font-size:18px}
+.sidebar .btn {width:100%;margin-top:12px}
+.welcome {
+  padding:25px;border-radius:17px;margin-bottom:18px;
+  background:linear-gradient(120deg,#263348,#18352f);
+  border:1px solid #3b4c50;
+}
+.welcome h1 {margin:0 0 8px;font-size:27px}
+.welcome p {margin:0;color:#c7d0dc;line-height:1.5}
+.stories {
+  display:flex;gap:16px;overflow-x:auto;
+  padding:16px;background:var(--panel);
+  border:1px solid var(--border);border-radius:17px;
+  margin-bottom:18px;
+}
+.story {flex:0 0 65px;text-align:center;font-size:12px;color:var(--muted)}
+.ring {
+  width:58px;height:58px;padding:3px;margin:auto auto 7px;
+  border-radius:50%;
+  background:linear-gradient(135deg,#e5bd69,#d27da6,#8d79e8);
+}
+.avatar {
+  width:100%;height:100%;border-radius:50%;
+  background:#303b50;border:2px solid var(--panel);
+  display:grid;place-items:center;font-weight:bold;color:white;
+}
+.composer {
+  display:flex;gap:12px;align-items:center;
+  padding:15px;margin-bottom:18px;
+}
+.composer input {
+  flex:1;min-width:0;padding:12px 16px;
+  border:1px solid var(--border);border-radius:25px;
+  background:var(--panel2);color:white;
+}
+.post {padding:17px;margin-bottom:18px}
+.posthead {display:flex;align-items:center;gap:11px}
+.posthead .avatar {width:42px;height:42px;flex:0 0 42px}
+.posthead small {display:block;color:var(--muted);margin-top:4px}
+.more {margin-left:auto;color:var(--muted)}
+.post p {line-height:1.6;color:#e2e6ed}
+.postmedia {
+  margin:12px 0;min-height:180px;border-radius:13px;
+  background:linear-gradient(135deg,#293e4c,#493546);
+  display:grid;place-items:center;color:#e5c98a;font-size:28px;
+  overflow:hidden;
+}
+.postmedia img,.postmedia video {
+  width:100%;max-height:430px;object-fit:cover;
+}
+.post-actions {
+  display:flex;gap:22px;padding-top:8px;color:var(--muted);
+}
+.post-actions button {background:none;color:inherit;border:0}
+.rightbar {padding:17px;height:max-content}
+.person {display:flex;align-items:center;gap:9px;margin:16px 0}
+.person .avatar {width:39px;height:39px;flex:0 0 39px}
+.person small {display:block;color:var(--muted);margin-top:4px}
+.follow {
+  margin-left:auto;padding:7px 11px;border-radius:20px;
+  color:var(--gold);background:var(--panel2);
+  border:1px solid var(--border);
+}
+.tag {
+  display:inline-block;padding:7px 10px;margin:4px;
+  border-radius:20px;background:#293b35;color:var(--green);
+  font-size:12px;
+}
+.section {display:none}
+.section.show {display:block}
+.section-title {font-size:25px;margin:0 0 17px}
+.panel {padding:20px}
+.grid {display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.stat {padding:17px;border-radius:13px;background:var(--panel2)}
+.stat strong {display:block;color:var(--gold);font-size:25px;margin-bottom:7px}
+.muted {color:var(--muted);line-height:1.5}
+.field {
+  display:block;width:100%;padding:12px;margin:10px 0 16px;
+  border:1px solid var(--border);border-radius:10px;
+  background:#101521;color:white;
+}
+.modal {
+  display:none;position:fixed;inset:0;z-index:30;
+  background:#000b;align-items:center;justify-content:center;padding:16px;
+}
+.modal.open {display:flex}
+.dialog {
+  width:min(520px,100%);max-height:90vh;overflow:auto;
+  background:var(--panel);border:1px solid var(--border);
+  border-radius:18px;padding:22px;
+}
+.close {float:right;background:none;border:0;color:white;font-size:25px}
+.mobilebar {display:none}
+@media(max-width:950px) {
+  .layout {grid-template-columns:70px minmax(0,1fr)}
+  .sidebar {padding:7px}
+  .nav {font-size:0;text-align:center;padding:14px 5px}
+  .nav b {font-size:20px;width:auto}
+  .sidebar .btn {font-size:0}
+  .rightbar {display:none}
+}
+@media(max-width:600px) {
+  .topbar {height:60px;padding:0 13px}
+  .search {display:none}
+  .layout {display:block;margin:12px auto;padding:0 10px}
+  .sidebar {display:none}
+  .welcome h1 {font-size:22px}
+  .mobilebar {
+    display:flex;position:fixed;bottom:0;left:0;right:0;
+    justify-content:space-around;padding:12px;
+    background:#151a26;border-top:1px solid var(--border);z-index:15;
+  }
+  .mobilebar button {background:none;border:0;color:white;font-size:22px}
+  .feed {padding-bottom:70px}
+}
+</style>
+</head>
+
+<body>
+
+<header class="topbar">
+  <a class="logo">con<span>nect</span>.</a>
+  <input class="search" id="search" placeholder="Search people, posts and circles...">
+  <button class="btn" onclick="openModal('authModal')">Join Connect</button>
+</header>
+
+<div class="layout">
+
+<!-- LEFT NAVIGATION -->
+<aside class="sidebar">
+  <button class="nav active" onclick="showPage('home',this)"><b>⌂</b> Home</button>
+  <button class="nav" onclick="showPage('explore',this)"><b>⌕</b> Explore</button>
+  <button class="nav" onclick="showPage('circles',this)"><b>◉</b> Circles</button>
+  <button class="nav" onclick="showPage('messages',this)"><b>✉</b> Messages</button>
+  <button class="nav" onclick="showPage('profile',this)"><b>♙</b> Profile</button>
+  <button class="nav" onclick="showPage('earnings',this)"><b>₹</b> Creator Earnings</button>
+  <button class="btn" onclick="openModal('postModal')">＋ Create Post</button>
+  <p class="muted" style="font-size:11px;margin:20px 8px">
+    Your world. Your circle.
+  </p>
+</aside>
+
+<!-- MAIN FEED -->
+<main class="feed">
+
+<section id="home" class="section show">
+
+  <div class="welcome">
+    <h1>Your world. Your circle.</h1>
+    <p>Discover people, share your moments and connect through what you love.</p>
+  </div>
+
+  <!-- STORIES -->
+  <div class="stories">
+    <div class="story" onclick="openModal('storyModal')">
+      <div class="ring"><div class="avatar">＋</div></div>
+      Your Story
+    </div>
+    <div class="story"><div class="ring"><div class="avatar">AK</div></div>Akash</div>
+    <div class="story"><div class="ring"><div class="avatar">PM</div></div>Priya</div>
+    <div class="story"><div class="ring"><div class="avatar">RS</div></div>Rohan</div>
+    <div class="story"><div class="ring"><div class="avatar">MN</div></div>Meera</div>
+    <div class="story"><div class="ring"><div class="avatar">SK</div></div>Sahil</div>
+  </div>
+
+  <!-- POST COMPOSER -->
+  <div class="card composer">
+    <div class="avatar" style="width:40px;height:40px;flex:0 0 40px">C</div>
+    <input placeholder="Share something with your circle..." readonly onclick="openModal('postModal')">
+    <button class="btn" onclick="openModal('postModal')">Post</button>
+  </div>
+
+  <div id="posts">
+
+    <article class="card post">
+      <div class="posthead">
+        <div class="avatar">AK</div>
+        <div><b>Akash Kulkarni</b><small>2 hours ago · Public</small></div>
+        <span class="more">•••</span>
+      </div>
+      <p>Great ideas happen when creative people come together. Excited to be part of this new community.</p>
+      <div class="postmedia">✦ CONNECT ✦</div>
+      <div class="post-actions">
+        <button onclick="likePost(this)">♡ <span>1200</span> Likes</button>
+        <button onclick="commentPost()">◯ Comment</button>
+        <button onclick="sharePost()">↗ Share</button>
+      </div>
+    </article>
+
+    <article class="card post">
+      <div class="posthead">
+        <div class="avatar">PM</div>
+        <div><b>Priya Mehta</b><small>5 hours ago · Photography Circle</small></div>
+        <span class="more">•••</span>
+      </div>
+      <p>Golden hour, quiet streets and a camera. That's my kind of therapy.</p>
+      <div class="postmedia">📷</div>
+      <div class="post-actions">
+        <button onclick="likePost(this)">♡ <span>846</span> Likes</button>
+        <button onclick="commentPost()">◯ Comment</button>
+        <button onclick="sharePost()">↗ Share</button>
+      </div>
+    </article>
+
+  </div>
+</section>
+
+<!-- EXPLORE -->
+<section id="explore" class="section">
+  <h2 class="section-title">Explore Connect</h2>
+  <div class="card panel">
+    <h3>Find your people</h3>
+    <p class="muted">Discover creators, conversations and communities.</p>
+    <div class="grid">
+      <div class="stat">🎬 <b>Video Creators</b><p class="muted">Videos and reels</p></div>
+      <div class="stat">📸 <b>Photography</b><p class="muted">Creative frames</p></div>
+      <div class="stat">🎵 <b>Music</b><p class="muted">Discover sounds</p></div>
+      <div class="stat">💡 <b>Learning</b><p class="muted">Ideas and knowledge</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- CIRCLES -->
+<section id="circles" class="section">
+  <h2 class="section-title">Your Circles</h2>
+  <div class="card panel">
+    <p class="muted">Join interest-based communities.</p>
+    <span class="tag">Photography</span>
+    <span class="tag">Film & OTT</span>
+    <span class="tag">Entrepreneurs</span>
+    <span class="tag">Fitness</span>
+    <span class="tag">Music</span>
+    <span class="tag">Travel</span>
+    <span class="tag">Technology</span>
+    <span class="tag">Fashion</span>
+    <p class="muted">Circle membership and visibility controls will require backend integration.</p>
+  </div>
+</section>
+
+<!-- MESSAGES -->
+<section id="messages" class="section">
+  <h2 class="section-title">Messages</h2>
+  <div class="card panel">
+    <h3>Private Conversations</h3>
+    <p class="muted">Connect with verified members to start conversations.</p>
+    <div class="person"><div class="avatar">AK</div><b>Akash Kulkarni</b></div>
+    <div class="person"><div class="avatar">PM</div><b>Priya Mehta</b></div>
+    <p class="muted">Live private messaging requires a secure backend.</p>
+  </div>
+</section>
+
+<!-- PROFILE -->
+<section id="profile" class="section">
+  <h2 class="section-title">Your Profile</h2>
+  <div class="card panel">
+    <div class="avatar" style="width:80px;height:80px;font-size:25px">C</div>
+    <h2>Welcome to Connect</h2>
+    <p class="muted">Create your account and build your community.</p>
+    <button class="btn" onclick="openModal('authModal')">Create Account</button>
+  </div>
+</section>
+
+<!-- CREATOR EARNINGS -->
+<section id="earnings" class="section">
+  <h2 class="section-title">Creator Earnings</h2>
+  <div class="card panel">
+    <h3>Build. Engage. Earn.</h3>
+    <p class="muted">Proposed Connect Creator Programme</p>
+    <div class="grid">
+      <div class="stat"><strong>10,000</strong>Verified Followers</div>
+      <div class="stat"><strong>3 Months</strong>Eligibility Period</div>
+    </div>
+    <h3 style="margin-top:22px">Proposed Content Rewards</h3>
+    <p>Text Post — ₹150</p>
+    <p>Photo Post — ₹250</p>
+    <p>Photo Album — ₹450</p>
+    <p>Short Video — ₹2,000</p>
+    <p>Long Video — ₹5,000</p>
+    <hr style="border-color:var(--border)">
+    <h3>Qualification Reward</h3>
+    <strong style="font-size:27px;color:var(--gold)">₹50,000</strong>
+    <p class="muted">These are proposed reward figures, not active or guaranteed payments. Final eligibility, views, engagement checks and payout rules must be established before launch.</p>
+  </div>
+</section>
+
+</main>
+
+<!-- RIGHT SIDEBAR -->
+<aside class="rightbar">
+  <h3>People to Connect</h3>
+  <div class="person">
+    <div class="avatar">AK</div>
+    <div><b>Akash K.</b><small>Film & Creativity</small></div>
+    <button class="follow" onclick="followUser(this)">Follow</button>
+  </div>
+  <div class="person">
+    <div class="avatar">PM</div>
+    <div><b>Priya M.</b><small>Photography</small></div>
+    <button class="follow" onclick="followUser(this)">Follow</button>
+  </div>
+  <div class="person">
+    <div class="avatar">RS</div>
+    <div><b>Rohan S.</b><small>Entrepreneur</small></div>
+    <button class="follow" onclick="followUser(this)">Follow</button>
+  </div>
+  <hr style="border-color:var(--border);margin:20px 0">
+  <h3>Popular Circles</h3>
+  <span class="tag">Film & OTT</span>
+  <span class="tag">Photography</span>
+  <span class="tag">Startups</span>
+  <span class="tag">Travel</span>
+  <p class="muted" style="font-size:11px;margin-top:25px">© 2026 Connect</p>
+</aside>
+
+</div>
+
+<!-- MOBILE NAVIGATION -->
+<nav class="mobilebar">
+  <button onclick="showPage('home')">⌂</button>
+  <button onclick="showPage('explore')">⌕</button>
+  <button onclick="openModal('postModal')">＋</button>
+  <button onclick="showPage('messages')">✉</button>
+  <button onclick="showPage('profile')">♙</button>
+</nav>
+
+<!-- CREATE POST MODAL -->
+<div class="modal" id="postModal">
+  <div class="dialog">
+    <button class="close" onclick="closeModal('postModal')">×</button>
+    <h2>Create a Post</h2>
+    <textarea id="postText" class="field" rows="4" placeholder="What's on your mind?"></textarea>
+    <label class="muted">Add photo, video or PDF</label>
+    <input id="postFile" class="field" type="file" accept="image/*,video/*,.pdf">
+    <label class="muted">Post visibility</label>
+    <select id="visibility" class="field">
+      <option>Public</option>
+      <option>Followers</option>
+      <option>Selected Circle</option>
+      <option>Only Me</option>
+    </select>
+    <button class="btn" onclick="publishPost()">Publish Preview</button>
+    <p class="muted" style="font-size:12px">Preview only. Posts are not uploaded to a server in this version.</p>
+  </div>
+</div>
+
+<!-- STORY MODAL -->
+<div class="modal" id="storyModal">
+  <div class="dialog">
+    <button class="close" onclick="closeModal('storyModal')">×</button>
+    <h2>Add Your Story</h2>
+    <input class="field" type="file" accept="image/*,video/*">
+    <p class="muted">Story publishing will be enabled with backend media storage.</p>
+    <button class="btn" onclick="closeModal('storyModal')">Done</button>
+  </div>
+</div>
+
+<!-- REGISTRATION MODAL -->
+<div class="modal" id="authModal">
+  <div class="dialog">
+    <button class="close" onclick="closeModal('authModal')">×</button>
+    <h2>Join Connect</h2>
+    <p class="muted">Create your account and join the community.</p>
+    <input class="field" placeholder="Full Name">
+    <input class="field" type="email" placeholder="Email Address">
+    <input class="field" type="password" placeholder="Create Password">
+    <label class="muted">Selfie verification photo</label>
+    <input class="field" type="file" accept="image/*" capture="user">
+    <p class="muted" style="font-size:12px">This is a registration preview. Actual account creation and selfie verification require secure backend integration.</p>
+    <button class="btn" onclick="alert('Registration is not active yet. Backend integration is required.')">Continue</button>
+  </div>
+</div>
+
+<script>
+function showPage(id,button) {
+  document.querySelectorAll('.section').forEach(s=>s.classList.remove('show'));
+  document.getElementById(id).classList.add('show');
+  document.querySelectorAll('.nav').forEach(n=>n.classList.remove('active'));
+  if(button) button.classList.add('active');
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+function openModal(id) {
+  document.getElementById(id).classList.add('open');
+}
+function closeModal(id) {
+  document.getElementById(id).classList.remove('open');
+}
+
+function likePost(button) {
+  const number=button.querySelector('span');
+  let count=parseInt(number.textContent)||0;
+  const liked=button.dataset.liked==='yes';
+  count+=liked?-1:1;
+  number.textContent=count;
+  button.dataset.liked=liked?'no':'yes';
+  button.style.color=liked?'':'#e58ba7';
+}
+
+function followUser(button) {
+  button.textContent=button.textContent==='Follow'?'Following':'Follow';
+}
+
+function commentPost() {
+  alert('Comments will be enabled after backend integration.');
+}
+
+function sharePost() {
+  if(navigator.share) {
+    navigator.share({
+      title:'Connect',
+      text:'Join me on Connect',
+      url:location.href
+    }).catch(()=>{});
+  } else {
+    alert('Website: https://ibcindia.github.io/connect/');
+  }
+}
+
+function publishPost() {
+  const text=document.getElementById('postText').value.trim();
+  const file=document.getElementById('postFile').files[0];
+
+  if(!text&&!file) {
+    alert('Please write something or select a file.');
+    return;
+  }
+
+  const article=document.createElement('article');
+  article.className='card post';
+
+  const header=document.createElement('div');
+  header.className='posthead';
+  header.innerHTML='<div class="avatar">C</div><div><b>Connect Member</b><small>Just now · Preview</small></div>';
+
+  const paragraph=document.createElement('p');
+  paragraph.textContent=text;
+
+  article.appendChild(header);
+  article.appendChild(paragraph);
+
+  if(file) {
+    const media=document.createElement('div');
+    media.className='postmedia';
+
+    if(file.type.startsWith('image/')) {
+      const img=document.createElement('img');
+      img.src=URL.createObjectURL(file);
+      media.appendChild(img);
+    } else if(file.type.startsWith('video/')) {
+      const video=document.createElement('video');
+      video.controls=true;
+      video.src=URL.createObjectURL(file);
+      media.appendChild(video);
+    } else {
+      media.textContent='PDF selected: '+file.name;
+    }
+    article.appendChild(media);
+  }
+
+  const actions=document.createElement('div');
+  actions.className='post-actions';
+  actions.innerHTML='<button onclick="likePost(this)">♡ <span>0</span> Likes</button><button onclick="commentPost()">◯ Comment</button><button onclick="sharePost()">↗ Share</button>';
+  article.appendChild(actions);
+
+  document.getElementById('posts').prepend(article);
+  document.getElementById('postText').value='';
+  document.getElementById('postFile').value='';
+  closeModal('postModal');
+  showPage('home');
+}
+
+document.getElementById('search').addEventListener('keydown',function(e) {
+  if(e.key==='Enter') {
+    alert('Member and post search will be enabled after backend integration.');
+  }
+});
+</script>
+
+</body>
+</html>
+
