@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#123f32">
+<title>CONNECT — Your people. Your passions. Your platform.</title>
+<style>
+:root{--forest:#123f32;--forest2:#1c654d;--lime:#c5eb61;--paper:#f6f8f5;--ink:#202824;--muted:#78847d;--line:#e4eae4}
+*{box-sizing:border-box}html,body{margin:0;min-height:100%;font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;color:var(--ink)}
+body{background:var(--paper)}button,input,select,textarea{font:inherit}.shell{min-height:100vh;display:grid;grid-template-columns:55% 45%;overflow:hidden}
+.hero{position:relative;min-height:100vh;background:var(--forest);color:white;padding:9.5vh 8vw 5vh;display:flex;flex-direction:column;justify-content:space-between;overflow:hidden}
+.rings,.rings:before,.rings:after{position:absolute;border:1px solid rgba(208,235,215,.13);border-radius:50%;content:"";pointer-events:none}
+.rings{width:640px;height:640px;right:-270px;top:-150px}.rings:before{width:530px;height:530px;left:74px;top:80px}.rings:after{width:800px;height:800px;left:70px;top:450px}
+.brand{display:flex;align-items:center;gap:13px;position:relative;z-index:1;font-size:18px;font-weight:750;letter-spacing:3px}
+.brand-mark{width:36px;height:36px;border-radius:12px;background:var(--lime);color:#173d30;display:grid;place-items:center;font-size:23px;font-weight:800;letter-spacing:0}
+.hero-copy{position:relative;z-index:1;max-width:650px;margin:6vh 0}
+.eyebrow{font-size:9px;letter-spacing:2.4px;font-weight:750;color:#a9c9b8;text-transform:uppercase}
+.hero h1{font-size:clamp(42px,5.5vw,72px);line-height:1.03;letter-spacing:-2.3px;margin:26px 0 24px;font-weight:750}
+.hero h1 em{display:block;color:var(--lime);font-weight:450}
+.hero p{font-size:15px;line-height:1.9;color:#c4d4cc;max-width:390px;margin:0}
+.features{display:flex;flex-wrap:wrap;gap:26px;position:relative;z-index:1;font-size:11px;color:#d8e6de}
+.feature{display:flex;align-items:center;gap:9px}.feature b{font-size:17px;font-weight:400}
+.hero-foot{position:relative;z-index:1;color:#739485;font-size:9px;letter-spacing:2px;margin-top:6vh}
+.panel{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:60px clamp(28px,6.1vw,86px);background:var(--paper)}
+.panel-inner{width:100%;max-width:460px}.panel .eyebrow{color:#89958d;font-size:9px}
+h2{font-size:clamp(28px,3vw,36px);line-height:1.22;letter-spacing:-.9px;margin:20px 0 18px}
+h2 em{color:var(--forest2);font-weight:450}
+.sub{color:var(--muted);font-size:15px;line-height:1.7;margin:0 0 44px}
+.primary{border:0;border-radius:9px;background:var(--forest2);color:white;padding:16px 20px;width:100%;font-weight:700;cursor:pointer;transition:.2s}
+.primary:hover{background:#14563f;transform:translateY(-1px)}.secondary{border:1px solid #dce5dd;background:transparent;color:var(--forest);border-radius:9px;padding:14px 18px;width:100%;font-weight:650;cursor:pointer}
+.rule{display:flex;align-items:center;gap:16px;color:#a3ada6;font-size:8px;letter-spacing:2px;margin:34px 0}.rule:before,.rule:after{content:"";height:1px;background:var(--line);flex:1}
+.trust{border:1px solid #d8e9dc;background:#edf5ef;border-radius:12px;padding:20px;display:flex;gap:15px;color:#14704e;margin-top:0}
+.trust-icon{font-size:19px}.trust strong{font-size:12px;display:block;margin-bottom:7px}.trust p{font-size:11px;line-height:1.7;color:#68796f;margin:0}
+.terms{font-size:9px;color:#9aa49d;margin-top:34px;line-height:1.8}
+.view{display:none}.view.active{display:block}.back{border:0;background:none;color:#567466;padding:0 0 18px;cursor:pointer;font-size:12px;font-weight:650}
+.field{margin:17px 0}.field label{display:block;font-size:11px;font-weight:700;color:#526259;margin-bottom:8px}
+.field input,.field select,.field textarea{width:100%;border:1px solid #dce4dd;border-radius:8px;padding:14px 13px;background:#fff;color:#26352d;outline:none}
+.field input:focus,.field select:focus,.field textarea:focus{border-color:#398064;box-shadow:0 0 0 3px #39806418}
+.field small{display:block;color:#8a968e;font-size:10px;margin-top:7px}.two{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.switchline{text-align:center;font-size:12px;color:#7b8980;margin:20px 0}.textbtn{border:0;background:none;color:#17684d;font-weight:750;cursor:pointer}
+.notice{font-size:10px;color:#829087;line-height:1.6;margin:15px 0}
+.otp{display:flex;gap:9px}.otp input{text-align:center;font-size:21px;font-weight:700;padding:13px 0}
+.status{display:none;padding:12px;border-radius:8px;background:#edf5ef;color:#17684d;font-size:12px;margin:12px 0}.status.show{display:block}
+.progress{display:flex;gap:6px;margin:0 0 25px}.progress span{height:4px;flex:1;background:#e3e9e3;border-radius:4px}.progress span.done{background:#267252}
+@media(max-width:850px){.shell{grid-template-columns:1fr}.hero{min-height:auto;padding:34px 8vw 28px}.hero-copy{margin:55px 0 45px}.hero h1{font-size:clamp(42px,10vw,64px)}.hero-foot{margin-top:32px}.panel{min-height:auto;padding:55px 8vw 70px}.rings{right:-420px}.features{gap:15px}}
+@media(max-width:480px){.hero{padding:28px 25px 24px}.hero-copy{margin:48px 0 38px}.hero h1{letter-spacing:-1.7px}.panel{padding:45px 25px 55px}.two{grid-template-columns:1fr}.sub{margin-bottom:30px}.terms{margin-top:25px}}
+</style>
+</head>
+<body>
+<div class="shell">
+<section class="hero">
+  <div class="rings"></div>
+  <div class="brand"><span class="brand-mark">C</span><span>CONNECT</span></div>
+  <div class="hero-copy">
+    <div class="eyebrow">A SOCIAL NETWORK BUILT AROUND YOU</div>
+    <h1>Your people.<em>Your passions.</em>Your platform.</h1>
+    <p>Share what moves you. Find your Circle. Build an audience that actually cares.</p>
+  </div>
+  <div>
+    <div class="features">
+      <span class="feature"><b>♧</b> Verified identities</span>
+      <span class="feature"><b>⊙</b> Interest-led Circles</span>
+      <span class="feature"><b>↗</b> Creator rewards</span>
+    </div>
+    <div class="hero-foot">CONNECT SOCIAL NETWORK · EST. 2026</div>
+  </div>
+</section>
+
+<main class="panel"><div class="panel-inner">
+  <section class="view active" id="welcome">
+    <div class="eyebrow">WELCOME TO YOUR NEXT COMMUNITY</div>
+    <h2>Make connections<br>that <em>mean something.</em></h2>
+    <p class="sub">Sign in or create your account to get started.</p>
+    <button class="primary" onclick="show('auth')">Continue to CONNECT</button>
+    <div class="rule">IDENTITY FIRST</div>
+    <div class="trust"><div class="trust-icon">♧</div><div><strong>Real people. Real connections.</strong><p>Every account must complete selfie verification before connecting with others.</p></div></div>
+    <p class="terms">By continuing, you agree to our Terms of Service and Privacy Policy.</p>
+  </section>
+
+  <section class="view" id="auth">
+    <button class="back" onclick="show('welcome')">← Back</button>
+    <div class="eyebrow">YOUR COMMUNITY STARTS HERE</div>
+    <h2>Welcome to <em>CONNECT.</em></h2>
+    <p class="sub">Choose how you want to get started.</p>
+    <button class="primary" onclick="setMode('signup');show('phone')">Create a new account</button>
+    <div style="height:12px"></div>
+    <button class="secondary" onclick="setMode('signin');show('phone')">Sign in to your account</button>
+    <p class="terms">One mobile number. One verified identity. A more trusted community.</p>
+  </section>
+
+  <section class="view" id="phone">
+    <button class="back" onclick="show('auth')">← Back</button>
+    <div class="eyebrow" id="phoneEyebrow">CREATE YOUR ACCOUNT</div>
+    <h2>What's your <em>mobile number?</em></h2>
+    <p class="sub">We'll send you a one-time password to verify it's you.</p>
+    <div class="field"><label for="phoneNumber">Mobile number</label><input id="phoneNumber" type="tel" inputmode="numeric" maxlength="10" placeholder="10-digit mobile number"><small>India (+91) · OTP verification</small></div>
+    <div class="status" id="phoneStatus"></div>
+    <button class="primary" onclick="sendOtp()">Continue with OTP</button>
+    <p class="notice">Your number will be used for account security and sign-in. It won't be displayed publicly.</p>
+  </section>
+
+  <section class="view" id="verify">
+    <button class="back" onclick="show('phone')">← Back</button>
+    <div class="eyebrow">SECURE SIGN IN</div>
+    <h2>Verify it's <em>you.</em></h2>
+    <p class="sub">Enter the 6-digit OTP sent to <strong id="maskedNumber"></strong>.</p>
+    <div class="field"><label>One-time password</label><div class="otp">
+      <input aria-label="OTP digit 1" maxlength="1" inputmode="numeric">
+      <input aria-label="OTP digit 2" maxlength="1" inputmode="numeric">
+      <input aria-label="OTP digit 3" maxlength="1" inputmode="numeric">
+      <input aria-label="OTP digit 4" maxlength="1" inputmode="numeric">
+      <input aria-label="OTP digit 5" maxlength="1" inputmode="numeric">
+      <input aria-label="OTP digit 6" maxlength="1" inputmode="numeric">
+    </div></div>
+    <div class="status" id="otpStatus"></div>
+    <button class="primary" onclick="verifyOtp()">Verify & Continue</button>
+    <p class="switchline">Didn't receive it? <button class="textbtn" onclick="sendOtp()">Resend OTP</button></p>
+    <p class="notice">Demo interface: connect an SMS/OTP provider and server-side verification before going live.</p>
+  </section>
+
+  <section class="view" id="profile">
+    <button class="back" onclick="show('verify')">← Back</button>
+    <div class="progress"><span class="done"></span><span class="done"></span><span></span></div>
+    <div class="eyebrow">LET'S MAKE IT PERSONAL</div>
+    <h2>Build your <em>profile.</em></h2>
+    <p class="sub">Tell your community a little about yourself.</p>
+    <div class="two">
+      <div class="field"><label for="firstName">First name</label><input id="firstName" placeholder="Your first name"></div>
+      <div class="field"><label for="lastName">Last name</label><input id="lastName" placeholder="Your last name"></div>
+    </div>
+    <div class="field"><label for="username">Username</label><input id="username" placeholder="@yourname"></div>
+    <div class="field"><label for="dob">Date of birth</label><input id="dob" type="date"></div>
+    <div class="field"><label for="bio">A little about you</label><textarea id="bio" rows="3" placeholder="What are you passionate about?"></textarea></div>
+    <button class="primary" onclick="finishProfile()">Continue to identity verification</button>
+    <p class="notice">Your profile details can be edited later. Identity verification is a separate, secure step.</p>
+  </section>
+
+  <section class="view" id="identity">
+    <div class="eyebrow">TRUST BEGINS WITH IDENTITY</div>
+    <h2>One more step.<br><em>Verify your identity.</em></h2>
+    <p class="sub">To help keep CONNECT genuine, complete identity and selfie verification before connecting with other members.</p>
+    <div class="trust"><div class="trust-icon">♧</div><div><strong>Your privacy matters.</strong><p>Verification should be handled securely. Sensitive identity documents must never be stored in a public website or GitHub repository.</p></div></div>
+    <div style="height:20px"></div>
+    <button class="primary" onclick="alert('Identity verification provider is not connected yet. This step needs a secure verification service and backend.')">Start identity verification</button>
+    <p class="terms">Identity verification integration is required before this feature can be used in production.</p>
+  </section>
+</div></main>
+</div>
+<script>
+let mode='signup', currentPhone='';
+function show(id){document.querySelectorAll('.view').forEach(v=>v.classList.remove('active'));document.getElementById(id).classList.add('active');}
+function setMode(m){mode=m;document.getElementById('phoneEyebrow').textContent=m==='signup'?'CREATE YOUR ACCOUNT':'WELCOME BACK';}
+function sendOtp(){
+  const p=document.getElementById('phoneNumber').value.replace(/\D/g,'');
+  const box=document.getElementById('phoneStatus');
+  if(!/^[6-9]\d{9}$/.test(p)){box.textContent='Please enter a valid 10-digit Indian mobile number.';box.classList.add('show');return;}
+  currentPhone=p;document.getElementById('maskedNumber').textContent='+91 '+p.slice(0,2)+'••••••'+p.slice(-2);
+  const s=document.getElementById('otpStatus');s.textContent='Demo mode: SMS delivery is not connected yet.';s.classList.add('show');
+  show('verify');
+}
+function verifyOtp(){
+  const digits=[...document.querySelectorAll('.otp input')].map(x=>x.value).join('');
+  const s=document.getElementById('otpStatus');
+  if(!/^\d{6}$/.test(digits)){s.textContent='Please enter all 6 OTP digits.';s.classList.add('show');return;}
+  s.textContent='Demo only: real OTP validation is not connected. Do not use this flow for real accounts.';s.classList.add('show');
+  if(mode==='signup')show('profile');else show('identity');
+}
+document.querySelectorAll('.otp input').forEach((el,i,arr)=>{el.addEventListener('input',()=>{el.value=el.value.replace(/\D/g,'').slice(0,1);if(el.value&&arr[i+1])arr[i+1].focus();});el.addEventListener('keydown',e=>{if(e.key==='Backspace'&&!el.value&&arr[i-1])arr[i-1].focus();});});
+function finishProfile(){
+  const first=document.getElementById('firstName').value.trim(),user=document.getElementById('username').value.trim();
+  if(!first||!user){alert('Please enter at least your first name and username.');return;}
+  show('identity');
+}
+</script>
+</body>
+</html>
